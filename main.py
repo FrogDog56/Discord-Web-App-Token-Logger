@@ -31,9 +31,9 @@ time.sleep(1)
 
 driver.find_element(By.XPATH, "//*[@id='app-mount']/div[2]/div/div[1]/div/div/div/div/form/div/div/div[1]/div[2]/button[2]").click()
 
-time.sleep(60)
+time.sleep(15)
 
-token = driver.execute_script("""return (webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()""")
+token = driver.execute_script("return (webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()")
 print(token)
 
 time.sleep(360)
