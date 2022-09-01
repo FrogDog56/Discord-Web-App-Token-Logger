@@ -9,18 +9,25 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-user = input("Enter your username or email:")
-password = input("Enter your password:")
+user = input("Enter your username or email: ")
+password = input("Enter your password: ")
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
-option = webdriver.ChromeOptions()
-option.add_argument("--mute-audio")
-option.add_extension(os.getcwd() + "\solver.crx")
-option.add_experimental_option("excludeSwitches", ["enable-logging"])
+options = webdriver.ChromeOptions()
+options.add_argument("--mute-audio")
+options.add_extension(os.getcwd() + "\solver.crx")
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
-driver = webdriver.Chrome(ChromeDriverManager().install(), options = option)
+driver = webdriver.Chrome(ChromeDriverManager().install(), options = options)
 driver.get('https://discord.com/login')
+
+def is_element_on_page(xpath):
+    try:
+        driver.find_element(By.XPATH, xpath)
+    except Exception:
+        return False
+    return True
 
 time.sleep(2)
 
@@ -31,9 +38,24 @@ time.sleep(1)
 
 driver.find_element(By.XPATH, "//*[@id='app-mount']/div[2]/div/div[1]/div/div/div/div/form/div/div/div[1]/div[2]/button[2]").click()
 
-time.sleep(15)
+time.sleep(4)
+
+while is_element_on_page("//*[@id='app-mount']/div[2]/div/div[1]/div/div/div/section/div/div[2]/div/iframe"):
+    time.sleep(0)
+
+time.sleep(2)
+
+if is_element_on_page("/html/body/div[1]/div[2]/div/div[1]/div/div/div/form/div/div[2]/div/div/input"):
+    authcode = input("Enter your 2fa code: ")
+else:
+    pass
+
+driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div[1]/div/div/div/form/div/div[2]/div/div/input").send_keys(authcode)
+driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div[1]/div/div/div/form/div/div[2]/button[1]").click()
+
+time.sleep(5)
 
 token = driver.execute_script("return (webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()")
 print(token)
-
-time.sleep(360)
+pyperclip.copy(token)
+print("Copied to clipboard")
