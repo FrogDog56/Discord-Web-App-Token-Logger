@@ -1,5 +1,3 @@
-import colorama
-import selenium
 import warnings
 import os
 import time
@@ -7,10 +5,10 @@ import pyperclip
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from colorama import Back, Fore
 
-user = input("Enter your username or email: ")
-password = input("Enter your password: ")
+user = input(f"{Fore.GREEN}Enter your username or email: {Fore.RESET}")
+password = input(f"{Fore.GREEN}Enter your password: {Fore.RESET}")
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
@@ -56,6 +54,9 @@ driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div/div[1]/div/div/div/f
 time.sleep(5)
 
 token = driver.execute_script("return (webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()")
-print(token)
+print(f"{Fore.CYAN}token")
 pyperclip.copy(token)
-print("Copied to clipboard")
+print(f"Copied to clipboard{Fore.RESET}")
+
+print(f"{Fore.RED.RED}Quitting...")
+driver.quit()
