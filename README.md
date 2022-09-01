@@ -1,5 +1,5 @@
 # Discord Web App Token Logger
-A python script that uses selenium to get your token from the discord web app
+A python script that uses selenium to get your token from the discord web app if in case you want to bot your own account or just use your token to login.
 
 ## Install Packages
 ```
